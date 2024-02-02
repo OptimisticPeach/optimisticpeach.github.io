@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en-CA">
+  <head>
+      <meta charset="utf-8">
+      <title>Hypersphere</title>
+      <link rel="stylesheet"
+            href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+      <style>
+          body {
+              margin: 0;
+              width: 100vw;
+              height: 100vh;
+              font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+          }
+          .main-container {
+              margin-left: 15%;
+              margin-right: 15%;
+              height: 100%;
+              position: relative;
+              display: flex;
+              flex-direction: column;
+          }
+          .titlebar {
+              text-align: center;
+              padding-top: 2%;
+              padding-bottom: 2%;
+              width: 100%;
+              font: small-caps bold 30px sans-serif;
+          }
+          .commit-title {
+              font-size: 24px;
+              text-align: center;
+              padding-top: 2.5%;
+              padding-bottom: 0.5%;
+          }
+          .commit-date {
+              font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace;
+              font-size: 20px;
+              text-align: left;
+          }
+          .hypersphere-name {
+              font: small-caps bold 1.1em sans-serif;
+          }
+          .content-container {
+              width: 100%;
+              flex-grow: 2;
+              display: flex;
+              flex-flow: row;
+              justify-content: center;
+          }
+          .content-thing {
+              width: 40vw;
+              aspect-ratio: 4/3;
+          }
+          #main_canvas {
+              box-shadow: 0 10px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+          }
+          .controls-desc {
+              width: 15em;
+              padding: 1em;
+          }
+          .controls-title {
+              font-size: 24px;
+              text-align: center;
+              padding-top: 2.5%;
+              padding-bottom: 0.5%;
+              font-weight: bold;
+          }
+          .project-desc {
+              padding-top: 2%;
+              width: 100%;
+              text-align: center;
+          }
+          .footer-container {
+              bottom: 0;
+              width: 100%;
+              height: 5%;
+              display: flex;
+              flex-flow: row;
+          }
+          .footer-link {
+              flex-grow: 1;
+              text-align: center;
+          }
+      </style>
+  </head>
+  <body>
+    <noscript>
+      This page contains webassembly and javascript content, please enable javascript in your browser.
+    </noscript>
+    <script src="./bootstrap.js"></script>
+    <div class="main-container">
+        <div class="titlebar">
+            Hypersphere
+        </div>
+        <div class="content-container">
+            <div class="content-thing">
+                <canvas id="main_canvas"></canvas>
+            </div>
+            <div class="controls-desc">
+                <div class="controls-title">
+                    Controls
+                </div>
+                <ul>
+                    <li>
+                        <b>W / A / S / D</b> for movement.
+                    </li>
+                    <li>
+                        <b>Arrow Keys</b> for camera angle.
+                    </li>
+                    <li>
+                        <b>Shift / Space</b> for up/down.
+                    </li>
+                    <li>
+                        <b>Backtick</b> to toggle settings.
+                    </li>
+                </ul>
+                <hr>
+                <b>
+                    If swapping mesh generation mode causes no terrain to be rendered and instead only water, press "Reset World".
+                </b>
+                <hr>
+                <b>
+                    If the page looks broken and only a shadowed element is rendered, then your browser most likely does not
+                    support WebGPU.
+                </b>
+                <hr>
+                <b>
+                    If changing settings yields a black canvas you've likely overflowed a buffer limit set by your system. Refresh the page.
+                </b>
+                <hr>
+                <button id="fullscreen">
+                    Make Fullscreen
+                </button>
+            </div>
+        </div>
+        <div class = "commit-title">
+            Latest Update: Implemented a quantized mode which outlines hexagons.
+        </div>
+        <div class="commit-date">
+            September 4th at 11:05PM
+        </div>
+        <div class="project-desc">
+            <span class="hypersphere-name">Hypersphere</span> is a work-in-progress game that takes place on surface of a sphere. I'm still deciding where to take game
+            aspect of the project, and am currently just implementing technologies which I find interesting.
+            <br>
+            This website will be occasionally updated with notable updates and include a live version of the code as I work on development.
+        </div>
+        <div class="footer-container">
+            <div class="footer-link">
+                <i class="fa fa-github fa-lg"></i>
+                <a href="https://github.com/OptimisticPeach/">
+                    OptimisticPeach
+                </a>
+            </div>
+            <div class="footer-link">
+                <i class="fa fa-solid fa-file fa-lg"></i>
+                <a href="./PatrikBuhring.pdf">
+                    Resume
+                </a>
+            </div>
+        </div>
+    </div>
+  </body>
+</html>
