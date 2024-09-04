@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en-CA">
+  <head>
+      <meta charset="utf-8">
+      <title>Fluidic</title>
+      <link rel="stylesheet"
+            href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+      <style>
+          body {
+              margin: 0;
+              width: 100vw;
+              height: 100vh;
+              font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+          }
+          .main-container {
+              margin-left: 15%;
+              margin-right: 15%;
+              height: 100%;
+              position: relative;
+              display: flex;
+              flex-direction: column;
+          }
+          .titlebar {
+              text-align: center;
+              padding-top: 2%;
+              padding-bottom: 2%;
+              width: 100%;
+              font: small-caps bold 30px sans-serif;
+          }
+          .commit-title {
+              font-size: 24px;
+              text-align: center;
+              padding-top: 2.5%;
+              padding-bottom: 0.5%;
+          }
+          .commit-date {
+              font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace;
+              font-size: 20px;
+              text-align: left;
+          }
+          .hypersphere-name {
+              font: small-caps bold 1.1em sans-serif;
+          }
+          .content-container {
+              width: 100%;
+              flex-grow: 2;
+              display: flex;
+              flex-flow: row;
+              justify-content: center;
+          }
+          .content-thing {
+              width: 40vw;
+              aspect-ratio: 4/3;
+          }
+          #main_canvas {
+              box-shadow: 0 10px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+          }
+          .controls-desc {
+              width: 15em;
+              padding: 1em;
+          }
+          .controls-title {
+              font-size: 24px;
+              text-align: center;
+              padding-top: 2.5%;
+              padding-bottom: 0.5%;
+              font-weight: bold;
+          }
+          .project-desc {
+              padding-top: 2%;
+              width: 100%;
+              text-align: center;
+          }
+          .footer-container {
+              bottom: 0;
+              width: 100%;
+              height: 5%;
+              display: flex;
+              flex-flow: row;
+          }
+          .footer-link {
+              flex-grow: 1;
+              text-align: center;
+          }
+      </style>
+  </head>
+  <body>
+    <noscript>
+      This page contains webassembly and javascript content, please enable javascript in your browser.
+    </noscript>
+    <!-- <script src="./fluidic_test.js"></script> -->
+    <script type="module">
+        import init from './fluidic_test.js'
+        
+        // Resizing code blatantly taken from bevy repo
+        const canvasEl = document.getElementById('main_canvas');
+  
+        let once = false;
+        const observer_callback = (_mutations, _observer) => {
+          if (!once) {
+            // Lock the canvas aspect ratio to prevent the fit_canvas_to_parent setting from creating a feedback loop causing the canvas to grow on resize
+            // canvasEl.style.aspectRatio = canvasEl.attributes.width.value / canvasEl.attributes.height.value;
+            canvasEl.style = "";
+            once = true;
+          }
+        };
+  
+        const observer = new MutationObserver(observer_callback);
+  
+        const config = { attributeFilter: ['width', 'height'] };
+  
+        observer.observe(canvasEl, config);
+        init().catch((error) => {
+          if (!error.message.startsWith("Using exceptions for control flow, don't mind me. This isn't actually an error!")) {
+            throw error;
+          }
+        });
+    </script>
+    <div class="main-container">
+        <div class="titlebar">
+            Fluidic
+        </div>
+        <div class="content-container">
+            <!-- <div class="content-thing"> -->
+                <!-- <canvas id="main_canvas"></canvas> -->
+            <!-- </div> -->
+            <canvas class="content-thing" id="main_canvas" width="768" height="591"></canvas>
+            <div class="controls-desc">
+                <div class="controls-title">
+                    Controls
+                </div>
+                <ul>
+                    <li>
+                        <b>W / A / S / D</b> for movement.
+                    </li>
+                    <li>
+                        <b>Arrow Keys</b> for camera angle.
+                    </li>
+                    <li>
+                        <b>Shift / Space</b> for up/down.
+                    </li>
+                    <li>
+                        <b>O / P</b> to change sphere resolution.
+                    </li>
+                    <li>
+                        <b>K / L</b> to change number of initial peaks.
+                    </li>
+                    <li>
+                        <b>Enter</b> to refresh simulation.
+                    </li>
+                </ul>
+                <hr>
+                If the page looks broken and only a shadowed element is rendered, then your browser most likely does not
+                support WebGPU.
+                <b>
+                    Only Chrome supports WebGPU currently.
+                </b>
+                <hr>
+            </div>
+        </div>
+        <div class = "commit-title">
+            Implemented a WebGPU version.
+        </div>
+        <div class="commit-date">
+            September 4th, 2024 as 1:45AM 
+        </div>
+        <div class="project-desc">
+            <span class="hypersphere-name">Fluidic</span> is a spherical shallow water fluid simulation adapted 
+            to compute shaders for WebGPU. It'll eventually be integrated into Hypersphere.
+            <br>
+            This website will be occasionally updated with notable updates and include a live version of the code as I work on development.
+        </div>
+        <div class="footer-container">
+            <div class="footer-link">
+                <i class="fa fa-github fa-lg"></i>
+                <a href="https://github.com/OptimisticPeach/">
+                    OptimisticPeach
+                </a>
+            </div>
+            
+            <div>
+                <a href=".."><b>
+                    Hypersphere
+                </b></a>
+            </div>
+            
+            <div class="footer-link">
+                <i class="fa fa-solid fa-file fa-lg"></i>
+                <a href="./PatrikBuhring.pdf">
+                    Resume
+                </a>
+            </div>
+        </div>
+    </div>
+  </body>
+</html>
