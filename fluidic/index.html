@@ -88,7 +88,6 @@
     <noscript>
       This page contains webassembly and javascript content, please enable javascript in your browser.
     </noscript>
-    <!-- <script src="./fluidic_test.js"></script> -->
     <script type="module">
         import init from './fluidic_test.js'
         
@@ -115,15 +114,22 @@
             throw error;
           }
         });
+        
+        function fullscreen_canvas() {
+            if (canvasEl.webkitRequestFullScreen) {
+                canvasEl.webkitRequestFullScreen();
+            } else {
+                canvasEl.mozRequestFullScreen();
+            }
+        }
+
+        document.getElementById('fullscreen').addEventListener('click', fullscreen_canvas);
     </script>
     <div class="main-container">
         <div class="titlebar">
             Fluidic
         </div>
         <div class="content-container">
-            <!-- <div class="content-thing"> -->
-                <!-- <canvas id="main_canvas"></canvas> -->
-            <!-- </div> -->
             <canvas class="content-thing" id="main_canvas" width="768" height="591"></canvas>
             <div class="controls-desc">
                 <div class="controls-title">
@@ -151,22 +157,26 @@
                 </ul>
                 <hr>
                 If the page looks broken and only a shadowed element is rendered, then your browser most likely does not
-                support WebGPU.
-                <b>
-                    Only Chrome supports WebGPU currently.
-                </b>
+                support WebGPU. <b>(Currently only available on Chrome Stable or Firefox Nightly)</b>
                 <hr>
+                As WebGPU is a pretty new and cutting-edge technology, it's possible that you may encounter crashes
+                (although these crashes are typically isolated to this particular webpage, and won't affect the rest
+                of your computer). If this happens, please give the website a refresh.
+                <hr>
+                <button id="fullscreen">
+                    Make Fullscreen
+                </button>
             </div>
         </div>
         <div class = "commit-title">
-            Implemented a WebGPU version.
+            Latest Update: Implemented fluid boundaries
         </div>
         <div class="commit-date">
-            September 4th, 2024 as 1:45AM 
+            May 5th, 2025, at 6:08PM
         </div>
         <div class="project-desc">
             <span class="hypersphere-name">Fluidic</span> is a spherical shallow water fluid simulation adapted 
-            to compute shaders for WebGPU. It'll eventually be integrated into Hypersphere.
+            to compute shaders which can run on WebGPU. It's been integrated into Planetary!
             <br>
             This website will be occasionally updated with notable updates and include a live version of the code as I work on development.
         </div>
@@ -180,7 +190,7 @@
             
             <div>
                 <a href=".."><b>
-                    Hypersphere
+                    Planetary
                 </b></a>
             </div>
             

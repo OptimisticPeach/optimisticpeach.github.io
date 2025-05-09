@@ -2,7 +2,7 @@
 <html lang="en-CA">
   <head>
       <meta charset="utf-8">
-      <title>Hypersphere</title>
+      <title>Planetary</title>
       <link rel="stylesheet"
             href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
       <style>
@@ -38,7 +38,7 @@
               font-size: 20px;
               text-align: left;
           }
-          .hypersphere-name {
+          .planetary-name {
               font: small-caps bold 1.1em sans-serif;
           }
           .content-container {
@@ -88,15 +88,49 @@
     <noscript>
       This page contains webassembly and javascript content, please enable javascript in your browser.
     </noscript>
-    <script src="./bootstrap.js"></script>
+    <script type="module">
+        import init from './planetary.js'
+        
+        // Resizing code blatantly taken from bevy repo
+        const canvasEl = document.getElementById('main_canvas');
+  
+        let once = false;
+        const observer_callback = (_mutations, _observer) => {
+          if (!once) {
+            // Lock the canvas aspect ratio to prevent the fit_canvas_to_parent setting from creating a feedback loop causing the canvas to grow on resize
+            // canvasEl.style.aspectRatio = canvasEl.attributes.width.value / canvasEl.attributes.height.value;
+            canvasEl.style = "";
+            once = true;
+          }
+        };
+  
+        const observer = new MutationObserver(observer_callback);
+  
+        const config = { attributeFilter: ['width', 'height'] };
+  
+        observer.observe(canvasEl, config);
+        init().catch((error) => {
+          if (!error.message.startsWith("Using exceptions for control flow, don't mind me. This isn't actually an error!")) {
+            throw error;
+          }
+        });
+
+        function fullscreen_canvas() {
+            if (canvasEl.webkitRequestFullScreen) {
+                canvasEl.webkitRequestFullScreen();
+            } else {
+                canvasEl.mozRequestFullScreen();
+            }
+        }
+
+        document.getElementById('fullscreen').addEventListener('click', fullscreen_canvas);
+    </script>
     <div class="main-container">
         <div class="titlebar">
-            Hypersphere
+            Planetary
         </div>
         <div class="content-container">
-            <div class="content-thing">
-                <canvas id="main_canvas"></canvas>
-            </div>
+            <canvas class="content-thing" id="main_canvas" width="768" height="591"></canvas>
             <div class="controls-desc">
                 <div class="controls-title">
                     Controls
@@ -111,23 +145,14 @@
                     <li>
                         <b>Shift / Space</b> for up/down.
                     </li>
-                    <li>
-                        <b>Backtick</b> to toggle settings.
-                    </li>
                 </ul>
                 <hr>
-                <b>
-                    If swapping mesh generation mode causes no terrain to be rendered and instead only water, press "Reset World".
-                </b>
+                If the page looks broken and only a shadowed element is rendered, then your browser most likely does not
+                support WebGPU. <b>(Currently only available on Chrome Stable or Firefox Nightly)</b>
                 <hr>
-                <b>
-                    If the page looks broken and only a shadowed element is rendered, then your browser most likely does not
-                    support WebGPU.
-                </b>
-                <hr>
-                <b>
-                    If changing settings yields a black canvas you've likely overflowed a buffer limit set by your system. Refresh the page.
-                </b>
+                As WebGPU is a pretty new and cutting-edge technology, it's possible that you may encounter crashes
+                (although these crashes are typically isolated to this particular webpage, and won't affect the rest
+                of your computer). If this happens, please give the website a refresh.
                 <hr>
                 <button id="fullscreen">
                     Make Fullscreen
@@ -135,13 +160,13 @@
             </div>
         </div>
         <div class = "commit-title">
-            Latest Update: Implemented a quantized mode which outlines hexagons.
+            Latest update: Rewrote using Bevy and incorporated water from fluidic
         </div>
         <div class="commit-date">
-            September 4th, 2023 at 11:05PM
+            May 5th, 2025, at 6:10PM
         </div>
         <div class="project-desc">
-            <span class="hypersphere-name">Hypersphere</span> is a work-in-progress game that takes place on surface of a sphere. I'm still deciding where to take game
+            <span class="planetary-name">Planetary</span> is a work-in-progress game that takes place on surface of a sphere. I'm still deciding where to take game
             aspect of the project, and am currently just implementing technologies which I find interesting.
             <br>
             This website will be occasionally updated with notable updates and include a live version of the code as I work on development.
